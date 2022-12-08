@@ -14,11 +14,11 @@ Formato:
 3. Tolerancia con '%' (si es numero entero), o con decimales con punto y '%'
 
 Ejemplos:
-- 3.9 0.05%  (Naranja, Blanco, Dorado, Gris)
-- 820 1%    (Gris, Rojo, Marron, Marron)
-- 2.7M 1%   (Rojo, Violeta, Verde, Plateado)
-- 150K 2%   (Marron, Verde, Amarillo, Rojo]
-- 0.18    0.5% (Marron, Gris, Plateadi, Verde)
+- `3.9 0.05%` &emsp; (Naranja, Blanco, Dorado, Gris)
+- `820 1%`  &emsp;  (Gris, Rojo, Marron, Marron)
+- `2.7M 1%`  &emsp; (Rojo, Violeta, Verde, Plateado)
+- `150K 2%` &emsp;  (Marron, Verde, Amarillo, Rojo]
+- `0.18    0.5%` &emsp; (Marron, Gris, Plateadi, Verde)
 
 Multiplicadores: 
 - M, K, G
