@@ -2,6 +2,7 @@
 class TestElement:
 	correctAnswer = ""
 	title = "TestElement"
+	streak = 0
 
 	# instance attributes
 	def __init__(self, screen):

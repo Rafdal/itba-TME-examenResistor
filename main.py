@@ -24,6 +24,7 @@ screen = pygame.display.set_mode([900, 600])
 
 # basic font for user typed
 base_font = pygame.font.Font(None, 32)
+medium_font = pygame.font.Font(None, 46)
 big_font = pygame.font.Font(None, 58)
 
 
@@ -67,8 +68,10 @@ def textSendEvent(text):
 	global popupAnswer
 	if(text.replace(' ', '') == element.correctAnswer.replace(' ','')):
 		popupAnswer = "CORRECTO!"
+		element.streak += 1
 	else:
 		popupAnswer = "INCORRECTO!"
+		element.streak = 0
 	
 def textResetEvent():
 	element.new()
@@ -98,6 +101,9 @@ while True:
 
 
 	element.draw()
+
+	text_streak = medium_font.render("streak: "+str(element.streak), True, (0,0,0))
+	screen.blit(text_streak, (650, 150))
 
 	# update screen
 	pygame.display.flip()
