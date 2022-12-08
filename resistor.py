@@ -162,6 +162,14 @@ def drawResist(screen, x, y, colorPairs=[[]]):
 
 
 
+def secretShuffle(in_list):
+	out_list = []
+	while len(in_list) > 0:
+		item = secrets.choice(in_list)
+		out_list.append(item)
+		in_list.remove(item)
+	return out_list
+
 
 class ResistorElement(TestElement):
 
@@ -187,6 +195,7 @@ class ColorCodeElement(TestElement):
 	def __init__(self, screen):
 		self.title = "Codigo de color"
 		self.screen = screen
+		self.colorCodesPool = []
 		self.correctAnswer, self.color = self._getRandomColorCode()
 
 	def new(self):
@@ -196,7 +205,10 @@ class ColorCodeElement(TestElement):
 		_ = None
 
 	def _getRandomColorCode(self):
-		colorPair = list(secrets.choice(list(resistColorCodes.items())))
+		if len(self.colorCodesPool) == 0:
+			self.colorCodesPool = secretShuffle(list(resistColorCodes.items()))
+
+		colorPair = list( self.colorCodesPool.pop() )
 		return colorPair[0], colorPair[1]
 
 	# instance method
@@ -211,6 +223,7 @@ class E12SeriesElement(TestElement):
 	def __init__(self, screen):
 		self.title = "Valor normalizado E12 (10%)"
 		self.screen = screen
+		self.seriesPool = []
 		self.correctAnswer, self.colorPair = self._getRandomCode()
 
 	def new(self):
@@ -220,7 +233,10 @@ class E12SeriesElement(TestElement):
 		self.colorPair.reverse()
 
 	def _getRandomCode(self):
-		e12value = secrets.choice(e12series)
+		if len(self.seriesPool) == 0:
+			self.seriesPool = secretShuffle(e12series[:])
+
+		e12value = self.seriesPool.pop()
 		e12str = str(round(e12value,3)).rstrip('0').rstrip('.')
 		colorPair = e12toColorCodes(e12value)
 
