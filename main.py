@@ -11,6 +11,8 @@ from button import Button,renderButtons,setButtonFont
 
 from textBoxCheck import TextBoxCheck
 
+from resistor import ResistorElement
+
 # pygame.init() will initialize all
 # imported module
 pygame.init()
@@ -26,38 +28,28 @@ big_font = pygame.font.Font(None, 58)
 
 
 # INIT VARIABLES
-
-colorCodes, valueStr = getRandomResistValue()
-
-drawNewResist = True
+element = ResistorElement(screen=screen)
 
 popupAnswer = ""
 
-def flipResistor():
-	colorCodes.reverse()	
-
-def newResistor():
-	global drawNewResist
-	drawNewResist = True
-
 setButtonFont(base_font)
 
-Button(20, 50, 100, 50, 'Girar', flipResistor)
-Button(20, 110, 100, 50, 'Nuevo', newResistor)
+Button(20, 50, 100, 50, 'Girar', element.flipOrder)
+Button(20, 110, 100, 50, 'Nuevo', element.new)
 
 def textSendEvent(text):
 	global popupAnswer
-	if(text.replace(' ', '') == valueStr.replace(' ','')):
+	if(text.replace(' ', '') == element.correctAnswer.replace(' ','')):
 		popupAnswer = "CORRECTO!"
 	else:
 		popupAnswer = "INCORRECTO!"
 	
 def textResetEvent():
-	global drawNewResist
-	drawNewResist = True
+	element.new()
 
 
 textBox = TextBoxCheck(screen=screen, font=base_font, onSend=textSendEvent, onReset=textResetEvent)
+
 
 # 	MAIN LOOP
 
@@ -71,19 +63,14 @@ while True:
 
 	if textBox.sendFlag:
 		text_popup = big_font.render(popupAnswer, True, (0,0,0))
-		text_reveal = big_font.render(valueStr, True, (0,0,0))
+		text_reveal = big_font.render(element.correctAnswer, True, (0,0,0))
 
 		screen.blit(text_reveal, (200, 200))
 		screen.blit(text_popup, (200, 200 + text_reveal.get_height() + 100))
 
 	renderButtons(screen)
 
-	if(drawNewResist):
-		# dibujar el resist
-		colorCodes, valueStr = getRandomResistValue()
-		drawNewResist = False
-
-	drawResist(screen, 200, 60, colorCodes)
+	element.draw()
 
 	# update screen
 	pygame.display.flip()

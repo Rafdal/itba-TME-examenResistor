@@ -1,6 +1,7 @@
 import secrets	# cryptographic secure random engine
 import numpy as np
 import pygame
+from TestElement import *
 
 IMPRIMIR_VALORES = False		# Imprimir los valores (Para debug)
 PROB_RESIST_INVERT = 0.2	# Probabilidad de que la resistencia este al reves (Hay que saber la E12)
@@ -158,3 +159,26 @@ def drawResist(screen, x, y, colorPairs=[[]]):
 		rectColorBand = pygame.Rect(x+widthLR+bandStepX, y+centerOffset, 20, heightCenter)
 		pygame.draw.rect(screen, resistColorNames[color], rectColorBand)
 		bandStepX += 35
+
+
+
+
+class ResistorElement(TestElement):
+
+	def __init__(self, screen):
+		self.screen = screen
+		self.colorCodes, self.correctAnswer = getRandomResistValue()
+
+	def new(self):
+		self.colorCodes, self.correctAnswer = getRandomResistValue()
+		self.drawNewElement = True
+
+	def flipOrder(self):
+		self.colorCodes.reverse()
+
+	# instance method
+	def draw(self):
+		drawResist(self.screen, 200, 60, self.colorCodes)
+
+
+
