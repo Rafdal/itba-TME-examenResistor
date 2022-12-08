@@ -127,9 +127,9 @@ def drawResist(x, y, colorPairs=[[]]):
 	bandStepX = 20
 
 	for color in colorPairs:
-		rectColorBand = pygame.Rect(x+widthLR+bandStepX, y+centerOffset, 15, heightCenter)
+		rectColorBand = pygame.Rect(x+widthLR+bandStepX, y+centerOffset, 20, heightCenter)
 		pygame.draw.rect(screen, resistColorNames[color], rectColorBand)
-		bandStepX += 30
+		bandStepX += 35
 
 def roundResistVal(value):
 	highMults = ['u','m','','K','M','G']
