@@ -12,6 +12,7 @@ Formato:
 1. Numero de 1 a 3 digitos (maximo), con punto '.' para decimales (si corresponde)
 2. espacio
 3. Tolerancia con '%' (si es numero entero), o con decimales con punto y '%'
+
 Ejemplos:
 - 3.9 0.05%  (Naranja, Blanco, Dorado, Gris)
 - 820 1%    (Gris, Rojo, Marron, Marron)
