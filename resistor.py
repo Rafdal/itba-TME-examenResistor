@@ -171,7 +171,6 @@ class ResistorElement(TestElement):
 
 	def new(self):
 		self.colorCodes, self.correctAnswer = getRandomResistValue()
-		self.drawNewElement = True
 
 	def flipOrder(self):
 		self.colorCodes.reverse()
@@ -182,3 +181,60 @@ class ResistorElement(TestElement):
 
 
 
+class ColorCodeElement(TestElement):
+
+	def __init__(self, screen):
+		self.screen = screen
+		self.correctAnswer, self.color = self._getRandomColorCode()
+
+	def new(self):
+		self.correctAnswer, self.color = self._getRandomColorCode()
+
+	def flipOrder(self):
+		_ = None
+
+	def _getRandomColorCode(self):
+		colorPair = list(secrets.choice(list(resistColorCodes.items())))
+		return colorPair[0], colorPair[1]
+
+	# instance method
+	def draw(self):
+		rect = pygame.Rect(400, 100, 100, 100)
+		border = pygame.Rect(rect.left-1, rect.top-1, rect.width+2, rect.height+2)
+		pygame.draw.rect(self.screen, 'black', border, border_radius=16)
+		pygame.draw.rect(self.screen, resistColorNames[self.color], rect, border_radius=15)
+
+class E12SeriesElement(TestElement):
+
+	def __init__(self, screen):
+		self.screen = screen
+		self.correctAnswer, self.colorPair = self._getRandomCode()
+
+	def new(self):
+		self.correctAnswer, self.colorPair = self._getRandomCode()
+
+	def flipOrder(self):
+		self.colorPair.reverse()
+
+	def _getRandomCode(self):
+		e12value = secrets.choice(e12series)
+		e12str = str(round(e12value,3)).rstrip('0').rstrip('.')
+		colorPair = e12toColorCodes(e12value)
+
+		prob = PROB_RESIST_INVERT
+		inverted = np.random.choice([True, False], p=[prob, 1.0 - prob])
+		if inverted:
+			colorPair.reverse()
+
+		return e12str, colorPair
+
+	# instance method
+	def draw(self):
+		rect1 = pygame.Rect(250, 100, 100, 100)
+		rect2 = pygame.Rect(250+rect1.width, 100, 100, 100)
+		border1 = pygame.Rect(rect1.left-1, rect1.top-1, rect1.width+2, rect1.height+2)
+		border2 = pygame.Rect(rect2.left-1, rect2.top-1, rect2.width+2, rect2.height+2)
+		pygame.draw.rect(self.screen, 'black', border1, border_radius=16)
+		pygame.draw.rect(self.screen, 'black', border2, border_radius=16)
+		pygame.draw.rect(self.screen, resistColorNames[self.colorPair[0]], rect1, border_radius=15)
+		pygame.draw.rect(self.screen, resistColorNames[self.colorPair[1]], rect2, border_radius=15)

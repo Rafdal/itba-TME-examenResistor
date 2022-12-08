@@ -1,11 +1,10 @@
 
 class TestElement:
+	correctAnswer = ""
 
 	# instance attributes
 	def __init__(self, screen):
-		self.correctAnswer = ""
 		self.screen = screen
-		self.drawNewElement = False
 
 	def new(self):
 		raise NotImplementedError("New method should be implemented by subclass")
