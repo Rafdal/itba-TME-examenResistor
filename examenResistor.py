@@ -1,5 +1,5 @@
 """
-Autor: Rafael Dalzotto
+Autor: Rafael Dalzotto (rdalzotto@itba.edu.ar)
 Fecha: 7 Dic 2022
 """
 
