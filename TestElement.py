@@ -1,6 +1,7 @@
 
 class TestElement:
 	correctAnswer = ""
+	title = "TestElement"
 
 	# instance attributes
 	def __init__(self, screen):

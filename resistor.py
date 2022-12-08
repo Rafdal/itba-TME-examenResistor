@@ -166,6 +166,7 @@ def drawResist(screen, x, y, colorPairs=[[]]):
 class ResistorElement(TestElement):
 
 	def __init__(self, screen):
+		self.title = "Resistor"
 		self.screen = screen
 		self.colorCodes, self.correctAnswer = getRandomResistValue()
 
@@ -184,6 +185,7 @@ class ResistorElement(TestElement):
 class ColorCodeElement(TestElement):
 
 	def __init__(self, screen):
+		self.title = "Codigo de color"
 		self.screen = screen
 		self.correctAnswer, self.color = self._getRandomColorCode()
 
@@ -207,6 +209,7 @@ class ColorCodeElement(TestElement):
 class E12SeriesElement(TestElement):
 
 	def __init__(self, screen):
+		self.title = "Valor normalizado E12 (10%)"
 		self.screen = screen
 		self.correctAnswer, self.colorPair = self._getRandomCode()
 
@@ -221,8 +224,7 @@ class E12SeriesElement(TestElement):
 		e12str = str(round(e12value,3)).rstrip('0').rstrip('.')
 		colorPair = e12toColorCodes(e12value)
 
-		prob = PROB_RESIST_INVERT
-		inverted = np.random.choice([True, False], p=[prob, 1.0 - prob])
+		inverted = np.random.choice([True, False], p=[0.5, 0.5])
 		if inverted:
 			colorPair.reverse()
 

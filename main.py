@@ -20,7 +20,7 @@ pygame.init()
 clock = pygame.time.Clock()
 
 # it will display on screen
-screen = pygame.display.set_mode([800, 600])
+screen = pygame.display.set_mode([900, 600])
 
 # basic font for user typed
 base_font = pygame.font.Font(None, 32)
@@ -60,7 +60,7 @@ def flipElement():
 
 Button(20, 50, 100, 50, 'Girar', flipElement)
 Button(20, 110, 100, 50, 'Nuevo', newElement)
-Button(550, 10, 230, 50, 'Cambiar elemento', swapElement)
+Button(650, 10, 230, 50, 'Cambiar elemento', swapElement)
 
 def textSendEvent(text):
 	global popupAnswer
@@ -91,6 +91,10 @@ while True:
 		screen.blit(text_popup, (200, 200 + text_reveal.get_height() + 100))
 
 	renderButtons(screen)
+
+	text_title = base_font.render(element.title, True, (0,0,0))
+	screen.blit(text_title, (200, 5))
+
 
 	element.draw()
 
