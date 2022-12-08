@@ -218,6 +218,36 @@ class ColorCodeElement(TestElement):
 		pygame.draw.rect(self.screen, 'black', border, border_radius=16)
 		pygame.draw.rect(self.screen, resistColorNames[self.color], rect, border_radius=15)
 
+class ToleranceColorElement(TestElement):
+
+	def __init__(self, screen):
+		self.title = "Tolerancia"
+		self.screen = screen
+		self.toleranceCodesPool = []
+		self.correctAnswer, self.code = self._getRandomColorCode()
+
+	def new(self):
+		self.correctAnswer, self.code = self._getRandomColorCode()
+
+	def flipOrder(self):
+		_ = None
+
+	def _getRandomColorCode(self):
+		if len(self.toleranceCodesPool) == 0:
+			self.toleranceCodesPool = secretShuffle(list(tolColorMult.items()))
+
+		tolPair = list( self.toleranceCodesPool.pop() )
+
+		tolCode = str(round(tolPair[1][0], 3)).rstrip('0').rstrip('.') + '%'
+		return tolCode, tolPair[0]
+
+	# instance method
+	def draw(self):
+		rect = pygame.Rect(400, 100, 100, 100)
+		border = pygame.Rect(rect.left-1, rect.top-1, rect.width+2, rect.height+2)
+		pygame.draw.rect(self.screen, 'black', border, border_radius=16)
+		pygame.draw.rect(self.screen, resistColorNames[self.code], rect, border_radius=15)
+
 class E12SeriesElement(TestElement):
 
 	def __init__(self, screen):

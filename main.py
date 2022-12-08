@@ -11,7 +11,7 @@ from button import Button,renderButtons,setButtonFont
 
 from textBoxCheck import TextBoxCheck
 
-from resistor import ResistorElement, ColorCodeElement, E12SeriesElement
+from resistor import ResistorElement, ColorCodeElement, E12SeriesElement, ToleranceColorElement
 
 # pygame.init() will initialize all
 # imported module
@@ -32,6 +32,7 @@ elementList = [
 	ResistorElement(screen=screen),
 	ColorCodeElement(screen=screen),
 	E12SeriesElement(screen=screen),
+	ToleranceColorElement(screen=screen),
 ]
 
 elementId = 0
