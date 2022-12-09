@@ -75,7 +75,7 @@ def textSendEvent(text):
 		element.streak += 1
 		# pygame.mixer.Sound.play()
 		acierto_sound.play()
-		if (element.streak % 10 == 0):
+		if (element.streak % 20 == 0):
 			streak_sound.play()
 	else:
 		popupAnswer = "INCORRECTO!"
