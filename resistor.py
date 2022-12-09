@@ -19,7 +19,7 @@ resistColorNames = {
 	"g":'grey60',
 	"b":'white',
 	"d":'goldenrod3',
-	"p":'silver',
+	"p":'grey85',
 }
 
 # mapa de multiplicadores
@@ -216,6 +216,38 @@ class ColorCodeElement(TestElement):
 		border = pygame.Rect(rect.left-1, rect.top-1, rect.width+2, rect.height+2)
 		pygame.draw.rect(self.screen, 'black', border, border_radius=16)
 		pygame.draw.rect(self.screen, resistColorNames[self.color], rect, border_radius=15)
+
+
+class MultiplierElement(TestElement):
+
+	def __init__(self, screen):
+		self.title = "Multiplicador"
+		self.screen = screen
+		self.multipliersPool = []
+		self.correctAnswer, self.color = self._getRandomMultiplier()
+
+	def new(self):
+		self.correctAnswer, self.color = self._getRandomMultiplier()
+
+	def flipOrder(self):
+		_ = None
+
+	def _getRandomMultiplier(self):
+		if len(self.multipliersPool) == 0:
+			self.multipliersPool = secretShuffle(list(resistColorMult.items()))
+
+		multPair = list( self.multipliersPool.pop() )
+		power = multPair[1]
+		value = 10.0**power
+		return roundResistVal(value), multPair[0]
+
+	# instance method
+	def draw(self):
+		rect = pygame.Rect(400, 100, 100, 100)
+		border = pygame.Rect(rect.left-1, rect.top-1, rect.width+2, rect.height+2)
+		pygame.draw.rect(self.screen, 'black', border, border_radius=16)
+		pygame.draw.rect(self.screen, resistColorNames[self.color], rect, border_radius=15)
+
 
 class ToleranceColorElement(TestElement):
 
