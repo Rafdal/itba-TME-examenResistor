@@ -9,17 +9,20 @@ PROB_RESIST_INVERT = 0.2	# Probabilidad de que la resistencia este al reves (Hay
 # mapa de nombres
 resistColorNames = {
 	"n":'black',
-	"m":'brown',
+	"m":'brown4',
 	"r":'red2',
 	"na":'darkorange2',
 	"am":'yellow',
 	"v":'springgreen2',
 	"a":'blue3',
-	"vi":'violetred2',
+	# "vi":'blueviolet',
+	# "vi":'violetred2',
+	"vi":'magenta3',
 	"g":'grey60',
 	"b":'white',
-	"d":'goldenrod3',
-	"p":'grey85',
+	# "d":'orange3',
+	"d":'darkgoldenrod3',
+	"p":'grey80',
 }
 
 # mapa de multiplicadores
@@ -136,7 +139,9 @@ def getRandomResistValue():
 
 	# hardcoded
 	# colorPairs = ["v", "vi", "d", "g", "p"]
-	return colorPairs, valueStrPretty
+	# TODO: colocar la opcion de tolerancia
+	ans = valueStrPretty.split()
+	return colorPairs, [[ans[0]], [ans[1]]]
 
 
 def drawResist(screen, x, y, colorPairs=[[]]):
@@ -208,7 +213,7 @@ class ColorCodeElement(TestElement):
 			self.colorCodesPool = secretShuffle(list(resistColorCodes.items()))
 
 		colorPair = list( self.colorCodesPool.pop() )
-		return colorPair[0], colorPair[1]
+		return [[colorPair[0]]], colorPair[1]
 
 	# instance method
 	def draw(self):
@@ -239,7 +244,7 @@ class MultiplierElement(TestElement):
 		multPair = list( self.multipliersPool.pop() )
 		power = multPair[1]
 		value = 10.0**power
-		return roundResistVal(value), multPair[0]
+		return [[roundResistVal(value)]], multPair[0]
 
 	# instance method
 	def draw(self):
@@ -270,7 +275,8 @@ class ToleranceColorElement(TestElement):
 		tolPair = list( self.toleranceCodesPool.pop() )
 
 		tolCode = str(round(tolPair[1][0], 3)).rstrip('0').rstrip('.') + '%'
-		return tolCode, tolPair[0]
+		# TODO: Colocar aca la otra opcion de tolerancia
+		return [[tolCode]], tolPair[0]
 
 	# instance method
 	def draw(self):
@@ -334,7 +340,7 @@ class E12SeriesElement(TestElement):
 		if inverted:
 			colorPair.reverse()
 
-		return e12str, colorPair
+		return [e12str], colorPair
 
 	# instance method
 	def draw(self):

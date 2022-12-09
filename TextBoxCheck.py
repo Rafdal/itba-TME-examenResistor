@@ -44,7 +44,8 @@ class TextBoxCheck:
                     elif (c == '\n' or c == '\r'):
                         
                         if not self.sendFlag:
-                            self.onSend(self.user_text)
+                            
+                            self.onSend(self.user_text.split())
                             self.sendFlag = True
                         else:
                             self.user_text = ""

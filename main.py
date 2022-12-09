@@ -70,7 +70,10 @@ Button(650, 10, 230, 50, 'Cambiar elemento', swapElement)
 
 def textSendEvent(text):
 	global popupAnswer
-	if(text.replace(' ', '') == element.correctAnswer.replace(' ','')):
+	txtLst = text
+	ansLst = element.correctAnswer
+	if(True or (txtLst[0] == ansLst[0] and (txtLst[1] == ansLst[1][0] or txtLst[1] == ansLst[1][1]))):
+		print("ans, txt:", ansLst, txtLst)
 		popupAnswer = "CORRECTO!"
 		element.streak += 1
 		# pygame.mixer.Sound.play()
@@ -99,7 +102,12 @@ while True:
 
 	if textBox.sendFlag:
 		text_popup = big_font.render(popupAnswer, True, (0,0,0))
-		text_reveal = big_font.render(element.correctAnswer, True, (0,0,0))
+
+		txtAnswer = element.correctAnswer[0] + '    ' + element.correctAnswer[1][0]
+		if len(element.correctAnswer[1][1]) > 1:
+			txtAnswer += '(' + element.correctAnswer[1] + ')'
+			
+		text_reveal = big_font.render(txtAnswer, True, (0,0,0))
 		screen.blit(text_reveal, (200, 200))
 		screen.blit(text_popup, (200, 200 + text_reveal.get_height() + 100))
 
