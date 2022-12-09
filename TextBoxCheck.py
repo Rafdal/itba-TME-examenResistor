@@ -2,7 +2,7 @@ import pygame
 import sys
 
 
-
+# Text box for input data
 class TextBoxCheck:
     # create rectangle
     _input_rect = pygame.Rect(300, 500, 350, 40)

@@ -4,14 +4,13 @@ Fecha: 7 Dic 2022
 """
 
 import pygame
-import numpy as np
 
-from  resistor import getRandomResistValue,drawResist
+from  Resistors import getRandomResistValue,drawResist
 from button import Button,renderButtons,setButtonFont
 
-from textBoxCheck import TextBoxCheck
+from TextBoxCheck import TextBoxCheck
 
-from resistor import *
+from Resistors import *
 
 # pygame.init() will initialize all
 # imported module

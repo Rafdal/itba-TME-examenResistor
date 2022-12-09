@@ -1,4 +1,6 @@
 
+# TestElement Base Class
+
 class TestElement:
 	correctAnswer = ""
 	title = "TestElement"
