@@ -38,7 +38,7 @@ class TextBoxCheck:
 
                 else:
                     c = event.unicode	# OJO: Unicode es un string (mas de un byte)
-                    if(c.isalnum() or c == ' ' or c == '\t' or c == '%' or c == '.'):
+                    if(c.isalnum() or (c in " \t%.-")):
                         self.user_text += event.unicode
 
                     elif (c == '\n' or c == '\r'):

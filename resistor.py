@@ -65,18 +65,18 @@ resistColorCodes = {
 }
 
 e12series = [
-	10.0,
-	18.0,
-	33.0,
-	56.0,
-	12.0,
-	22.0,
-	39.0,
-	68.0,
-	15.0,
-	27.0,
-	47.0,
-	82.0,
+	'10',
+	'18',
+	'33',
+	'56',
+	'12',
+	'22',
+	'39',
+	'68',
+	'15',
+	'27',
+	'47',
+	'82',
 ]
 
 
@@ -98,8 +98,7 @@ def roundResistVal(value):
 	return str(round(value,3)).rstrip('0').rstrip('.') + highMults[2 + multCount]
 
 
-def e12toColorCodes(e12value):
-	e12str = str(round(e12value,3)).rstrip('0').rstrip('.')
+def e12toColorCodes(e12str):
 	return [resistColorCodes[e12str[0]], resistColorCodes[e12str[1]]]
 
 def tolStrPretty(tolVal):
@@ -121,7 +120,7 @@ def getRandomResistValue():
 	colorPairs.append(mult[0]) # agrego multiplicador
 	colorPairs.append(tol[0])
 
-	value = e12val * (10 ** mult[1])
+	value = float(e12val) * (10 ** mult[1])
 	valueStrPretty = roundResistVal(value) + tolStrPretty(tol[1][0])
 
 	valueStrRAW = str(round(value,3)).rstrip('0').rstrip('.')
@@ -262,13 +261,42 @@ class E12SeriesElement(TestElement):
 	def flipOrder(self):
 		self.colorPair.reverse()
 
+	# Pick a pair of colors which is not a valid E12 value
+	def _pickInvalidPairs(self):
+		pair = ''
+		valid = False
+		while not valid:
+			pair = ''
+			pair += secrets.choice(list(resistColorCodes.keys()))
+			pair += secrets.choice(list(resistColorCodes.keys()))
+			revPair = list(pair)
+			revPair.reverse()
+			revPair = ''.join(revPair)
+			if (pair in e12series) or (revPair in e12series):
+				pass
+			else:
+				valid = True
+		return pair
+
 	def _getRandomCode(self):
 		if len(self.seriesPool) == 0:
-			self.seriesPool = secretShuffle(e12series[:])
+			self.seriesPool = e12series.copy()
+			for _ in range(len(e12series)//2):
+				self.seriesPool.append(self._pickInvalidPairs())
 
-		e12value = self.seriesPool.pop()
-		e12str = str(round(e12value,3)).rstrip('0').rstrip('.')
-		colorPair = e12toColorCodes(e12value)
+			self.seriesPool = secretShuffle(self.seriesPool)
+
+		e12str = self.seriesPool.pop()
+
+		try:
+			colorPair = e12toColorCodes(e12str)
+		except Exception as ex:
+			print("EXCEPCION:", ex)
+			print("valores: '{}'".format(e12str))
+
+
+		if not (e12str in e12series):
+			e12str = '-'
 
 		inverted = np.random.choice([True, False], p=[0.5, 0.5])
 		if inverted:
