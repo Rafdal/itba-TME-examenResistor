@@ -27,6 +27,10 @@ base_font = pygame.font.Font(None, 32)
 medium_font = pygame.font.Font(None, 46)
 big_font = pygame.font.Font(None, 58)
 
+# sounds
+acierto_sound = pygame.mixer.Sound("acierto.wav")
+error_sound = pygame.mixer.Sound("error.wav")
+streak_sound = pygame.mixer.Sound("nice_streak.wav")
 
 # INIT VARIABLES
 elementList = [
@@ -69,9 +73,14 @@ def textSendEvent(text):
 	if(text.replace(' ', '') == element.correctAnswer.replace(' ','')):
 		popupAnswer = "CORRECTO!"
 		element.streak += 1
+		# pygame.mixer.Sound.play()
+		acierto_sound.play()
+		if (element.streak % 10 == 0):
+			streak_sound.play()
 	else:
 		popupAnswer = "INCORRECTO!"
 		element.streak = 0
+		error_sound.play()
 	
 def textResetEvent():
 	element.new()
