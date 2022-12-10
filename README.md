@@ -11,14 +11,14 @@ Pequeño programa para practicar los codigos de colores de la tabla de toleranci
 Formato:
 1. Numero de 1 a 3 digitos (maximo), con punto '.' para decimales (si corresponde)
 2. espacio
-3. Tolerancia con '%' (si es numero entero), o con decimales con punto y '%'
+3. Tolerancia (Ya no es necesario el '%') puede ser en numero o letra (si corresponde)
 
 Ejemplos:
-- `3.9 0.05%` &emsp; (Naranja, Blanco, Dorado, Gris)
-- `820 1%`  &emsp;  (Gris, Rojo, Marron, Marron)
-- `2.7M 1%`  &emsp; (Rojo, Violeta, Verde, Plateado)
-- `150K 2%` &emsp;  (Marron, Verde, Amarillo, Rojo]
-- `0.18    0.5%` &emsp; (Marron, Gris, Plateadi, Verde)
+- `3.9     0.05%` &emsp; (Naranja, Blanco, Dorado, Gris)
+- `820     1%`  &emsp;  (Gris, Rojo, Marron, Marron)
+- `2.7M    F`  &emsp; (Rojo, Violeta, Verde, Plateado)
+- `150K    2%` &emsp;  (Marron, Verde, Amarillo, Rojo]
+- `0.18    D` &emsp; (Marron, Gris, Plateadi, Verde)
 
 Multiplicadores: 
 - M, K, G
