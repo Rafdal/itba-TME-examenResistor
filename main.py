@@ -70,16 +70,25 @@ Button(650, 10, 230, 50, 'Cambiar elemento', swapElement)
 
 
 def isCorrectAnswer(ansLst, correctLst):
+	if len(ansLst) == 0:
+		return False
+		
 	for a, correctOpts in zip(ansLst, correctLst):
+		if len(a) == 0:
+			return False
+
 		foundCorrect = False
 		for opt in correctOpts:
 			a = a.replace('%','')
 			opt = opt.replace('%','')
+			print('compare', a, opt)
 			if opt == a:
 				foundCorrect = True
 				break
 		if not foundCorrect:
 			return False
+		else:
+			print ('Correct!')
 	return True
 
 def textSendEvent(text):
