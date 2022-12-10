@@ -141,7 +141,7 @@ def getRandomResistValue():
 	# colorPairs = ["v", "vi", "d", "g", "p"]
 	# TODO: colocar la opcion de tolerancia
 	ans = valueStrPretty.split()
-	return colorPairs, [[ans[0]], [ans[1]]]
+	return colorPairs, [[ans[0]], [ans[1], tol[1][1]]]
 
 
 def drawResist(screen, x, y, colorPairs=[[]]):
@@ -276,7 +276,7 @@ class ToleranceColorElement(TestElement):
 
 		tolCode = str(round(tolPair[1][0], 3)).rstrip('0').rstrip('.') + '%'
 		# TODO: Colocar aca la otra opcion de tolerancia
-		return [[tolCode]], tolPair[0]
+		return [[tolCode, tolPair[1][1]]], tolPair[0]
 
 	# instance method
 	def draw(self):
