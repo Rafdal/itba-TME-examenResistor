@@ -68,12 +68,25 @@ Button(20, 50, 100, 50, 'Girar', flipElement)
 Button(20, 110, 100, 50, 'Nuevo', newElement)
 Button(650, 10, 230, 50, 'Cambiar elemento', swapElement)
 
+
+def isCorrectAnswer(ansLst, correctLst):
+	for a, correctOpts in zip(ansLst, correctLst):
+		foundCorrect = False
+		for opt in correctOpts:
+			a = a.replace('%','')
+			opt = opt.replace('%','')
+			if opt == a:
+				foundCorrect = True
+				break
+		if not foundCorrect:
+			return False
+	return True
+
 def textSendEvent(text):
 	global popupAnswer
 	txtLst = text
 	ansLst = element.correctAnswer
-	if(True or (txtLst[0] == ansLst[0] and (txtLst[1] == ansLst[1][0] or txtLst[1] == ansLst[1][1]))):
-		print("ans, txt:", ansLst, txtLst)
+	if isCorrectAnswer(txtLst, ansLst):
 		popupAnswer = "CORRECTO!"
 		element.streak += 1
 		# pygame.mixer.Sound.play()
@@ -103,10 +116,18 @@ while True:
 	if textBox.sendFlag:
 		text_popup = big_font.render(popupAnswer, True, (0,0,0))
 
-		txtAnswer = element.correctAnswer[0] + '    ' + element.correctAnswer[1][0]
-		if len(element.correctAnswer[1][1]) > 1:
-			txtAnswer += '(' + element.correctAnswer[1] + ')'
-			
+		txtAnswer = ""
+		for corrOpts in element.correctAnswer:
+			i = 0
+			for opt in corrOpts:
+				if i == 0:
+					txtAnswer += opt
+				else:
+					txtAnswer += " ({})".format(opt)
+				txtAnswer += ' '
+				i += 1
+			txtAnswer += "   "
+					
 		text_reveal = big_font.render(txtAnswer, True, (0,0,0))
 		screen.blit(text_reveal, (200, 200))
 		screen.blit(text_popup, (200, 200 + text_reveal.get_height() + 100))

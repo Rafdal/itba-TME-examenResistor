@@ -340,7 +340,7 @@ class E12SeriesElement(TestElement):
 		if inverted:
 			colorPair.reverse()
 
-		return [e12str], colorPair
+		return [[e12str]], colorPair
 
 	# instance method
 	def draw(self):
