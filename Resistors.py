@@ -18,7 +18,7 @@ resistColorNames = {
 	# "vi":'blueviolet',
 	# "vi":'violetred2',
 	"vi":'magenta3',
-	"g":'grey60',
+	"g":'grey55',
 	"b":'white',
 	# "d":'orange3',
 	"d":'darkgoldenrod3',
@@ -86,6 +86,7 @@ e12series = [
 def roundResistVal(value):
 	highMults = ['u','m','','K','M','G']
 	multCount = 0
+	ogVal = value
 	if(value >= 1):
 		while (value // 1000 > 0):
 			value = value / 1000
@@ -98,7 +99,7 @@ def roundResistVal(value):
 	if multCount < -2 or multCount > 3:
 		print("OUT OF RANGE:", multCount)
 		multCount = 0
-	return str(round(value,3)).rstrip('0').rstrip('.') + highMults[2 + multCount]
+	return [str(round(value,3)).rstrip('0').rstrip('.') + highMults[2 + multCount], ogVal]
 
 
 def e12toColorCodes(e12str):
@@ -124,7 +125,7 @@ def getRandomResistValue():
 	colorPairs.append(tol[0])
 
 	value = float(e12val) * (10 ** mult[1])
-	valueStrPretty = roundResistVal(value) + tolStrPretty(tol[1][0])
+	valueStrPretty = roundResistVal(value)[0] + tolStrPretty(tol[1][0])
 
 	valueStrRAW = str(round(value,3)).rstrip('0').rstrip('.')
 
@@ -244,7 +245,7 @@ class MultiplierElement(TestElement):
 		multPair = list( self.multipliersPool.pop() )
 		power = multPair[1]
 		value = 10.0**power
-		return [[roundResistVal(value)]], multPair[0]
+		return [roundResistVal(value)], multPair[0]
 
 	# instance method
 	def draw(self):
