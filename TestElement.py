@@ -1,4 +1,3 @@
-
 # TestElement Base Class
 
 class TestElement:
@@ -7,7 +6,7 @@ class TestElement:
 	streak = 0
 
 	# instance attributes
-	def __init__(self, screen):
+	def __init__(self,screen):
 		self.screen = screen
 
 	def new(self):

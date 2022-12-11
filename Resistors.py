@@ -2,6 +2,7 @@ import secrets	# cryptographic secure random engine
 import numpy as np
 import pygame
 from TestElement import *
+from utils import *
 
 IMPRIMIR_VALORES = False		# Imprimir los valores (Para debug)
 PROB_RESIST_INVERT = 0.2	# Probabilidad de que la resistencia este al reves (Hay que saber la E12)
@@ -67,39 +68,8 @@ resistColorCodes = {
 	'9': "b",
 }
 
-e12series = [
-	'10',
-	'18',
-	'33',
-	'56',
-	'12',
-	'22',
-	'39',
-	'68',
-	'15',
-	'27',
-	'47',
-	'82',
-]
 
 
-def roundResistVal(value):
-	highMults = ['u','m','','K','M','G']
-	multCount = 0
-	ogVal = value
-	if(value >= 1):
-		while (value // 1000 > 0):
-			value = value / 1000
-			multCount += 1
-	elif(value < 0.1):
-		while (value < 0.1):
-			value = value * 1000
-			multCount -= 1
-
-	if multCount < -2 or multCount > 3:
-		print("OUT OF RANGE:", multCount)
-		multCount = 0
-	return [str(round(value,3)).rstrip('0').rstrip('.') + highMults[2 + multCount], ogVal]
 
 
 def e12toColorCodes(e12str):
@@ -125,7 +95,7 @@ def getRandomResistValue():
 	colorPairs.append(tol[0])
 
 	value = float(e12val) * (10 ** mult[1])
-	valueStrPretty = roundResistVal(value)[0] + tolStrPretty(tol[1][0])
+	valueStrPretty = roundWithMultiplier(value)[0] + tolStrPretty(tol[1][0])
 
 	valueStrRAW = str(round(value,3)).rstrip('0').rstrip('.')
 
@@ -245,7 +215,7 @@ class MultiplierElement(TestElement):
 		multPair = list( self.multipliersPool.pop() )
 		power = multPair[1]
 		value = 10.0**power
-		return [roundResistVal(value)], multPair[0]
+		return [roundWithMultiplier(value)], multPair[0]
 
 	# instance method
 	def draw(self):

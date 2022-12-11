@@ -79,6 +79,7 @@ def isCorrectAnswer(ansLst, correctLst):
 
 		foundCorrect = False
 		for opt in correctOpts:
+			# opt = str(opt).rstrip('0').rstrip('.')
 			a = a.replace('%','')
 			opt = opt.replace('%','')
 			if opt == a:
