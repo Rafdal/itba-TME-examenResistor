@@ -81,7 +81,6 @@ def isCorrectAnswer(ansLst, correctLst):
 		for opt in correctOpts:
 			a = a.replace('%','')
 			opt = opt.replace('%','')
-			print('compare', a, opt)
 			if opt == a:
 				foundCorrect = True
 				break
