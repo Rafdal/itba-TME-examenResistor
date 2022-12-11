@@ -131,7 +131,7 @@ while True:
 			for opt in corrOpts:
 				if i == 0:
 					txtAnswer += opt
-				else:
+				elif i == 1:
 					txtAnswer += " ({})".format(opt)
 				txtAnswer += ' '
 				i += 1
@@ -144,7 +144,7 @@ while True:
 	renderButtons(screen)
 
 	text_title = base_font.render(element.title, True, (0,0,0))
-	screen.blit(text_title, (200, 5))
+	screen.blit(text_title, (200, 15))
 
 
 	element.draw()

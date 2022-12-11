@@ -19,7 +19,7 @@ resistColorNames = {
 	# "vi":'blueviolet',
 	# "vi":'violetred2',
 	"vi":'magenta3',
-	"g":'grey55',
+	"g":'grey50',
 	"b":'white',
 	# "d":'orange3',
 	"d":'darkgoldenrod3',
@@ -304,12 +304,12 @@ class E12SeriesElement(TestElement):
 			print("valores: '{}'".format(e12str))
 
 
-		if not (e12str in e12series):
-			e12str = '-'
-
 		inverted = np.random.choice([True, False], p=[0.5, 0.5])
 		if inverted:
 			colorPair.reverse()
+
+		if not (e12str in e12series):
+			return [['-','No es un valor E12','n','no']], colorPair
 
 		return [[e12str]], colorPair
 
