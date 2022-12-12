@@ -2,8 +2,11 @@
 
 class TestElement:
 	correctAnswer = ""
+	hint = "Hint"
 	title = "TestElement"
 	streak = 0
+	correctCount = 0
+	totalCount = 0
 
 	# instance attributes
 	def __init__(self,screen):

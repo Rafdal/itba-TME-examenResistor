@@ -19,11 +19,11 @@ resistColorNames = {
 	# "vi":'blueviolet',
 	# "vi":'violetred2',
 	"vi":'magenta3',
-	"g":'grey50',
+	"g":'grey45',
 	"b":'white',
 	# "d":'orange3',
 	"d":'darkgoldenrod3',
-	"p":'grey80',
+	"p":'grey85',
 }
 
 # mapa de multiplicadores
@@ -146,10 +146,13 @@ def secretShuffle(in_list):
 	return out_list
 
 
+
+
 class ResistorElement(TestElement):
 
 	def __init__(self, screen):
 		self.title = "Resistor"
+		self.hint = "formato: resistencia tolerancia (ej: 47K 0.5)"
 		self.screen = screen
 		self.colorCodes, self.correctAnswer = getRandomResistValue()
 
@@ -169,6 +172,7 @@ class ColorCodeElement(TestElement):
 
 	def __init__(self, screen):
 		self.title = "Codigo de color"
+		self.hint = "formato: numero (ej: 4)"
 		self.screen = screen
 		self.colorCodesPool = []
 		self.correctAnswer, self.color = self._getRandomColorCode()
@@ -198,6 +202,7 @@ class MultiplierElement(TestElement):
 
 	def __init__(self, screen):
 		self.title = "Multiplicador"
+		self.hint = "formato: numero con multiplicador (ej: 100M)"
 		self.screen = screen
 		self.multipliersPool = []
 		self.correctAnswer, self.color = self._getRandomMultiplier()
@@ -229,6 +234,7 @@ class ToleranceColorElement(TestElement):
 
 	def __init__(self, screen):
 		self.title = "Tolerancia"
+		self.hint = "formato: tolerancia numero o letra (ej: 0.25 o C)"
 		self.screen = screen
 		self.toleranceCodesPool = []
 		self.correctAnswer, self.code = self._getRandomColorCode()
@@ -260,6 +266,7 @@ class E12SeriesElement(TestElement):
 
 	def __init__(self, screen):
 		self.title = "Valor normalizado E12 (10%)"
+		self.hint = "formato: 2 numeros o guion (si no es valido) (ej: 47)"
 		self.screen = screen
 		self.seriesPool = []
 		self.correctAnswer, self.colorPair = self._getRandomCode()
