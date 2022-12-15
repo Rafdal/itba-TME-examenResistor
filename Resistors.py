@@ -80,7 +80,7 @@ def tolStrPretty(tolVal):
 
 def getRandomResistValue():
 	
-	pTol = [0.1, 0.1, 0.05, 0.02, 0.02, 0.01, 0.35, 0.35]	# probabilitades
+	pTol = [0.05, 0.05, 0.05, 0.02, 0.02, 0.01, 0.4, 0.4]	# probabilitades
 
 	# elegir tolerancia
 	tolID = np.random.choice(list(range(8)), p=pTol)
