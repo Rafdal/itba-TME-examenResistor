@@ -1,5 +1,7 @@
 # itba-TME-examenResistor
-Pequeño programa para practicar los codigos de colores de la tabla de tolerancia del 10% (E12)
+Pequeño programa para practicar los codigos de colores de las tablas de tolerancia del 10% (E12), 5% 2% y 1% (E24, E48, E96)
+
+### OJO! Este README esta desactualizado!
 
 ## Guia de uso
 1. Escribir con el teclado el valor de la resistencia respetando la [Guia de Formato](#guia-de-formato)
