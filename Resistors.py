@@ -42,18 +42,6 @@ resistColorMult = {
 	"p": -2,
 }
 
-# mapa de tolerancias 'color': [valor, potencia, %tolerancia, tolerancia]
-tolColorMult = {
-	"m":	[1,		'F'],
-	"r":	[2,		'G'],
-	"v":	[0.5,	'D'],
-	"a":	[0.25,	'C'],
-	"vi":	[0.10,	'B'],
-	"g":	[0.05,	'-'],
-	"d":	[5,		'J'],
-	"p":	[10.0,	'K'],
-}
-
 # mapa de codigos
 resistColorCodes = {
 	'0': "n",
@@ -68,34 +56,56 @@ resistColorCodes = {
 	'9': "b",
 }
 
-
-
+# mapa de tolerancias 'color': [valor, potencia, %tolerancia, tolerancia]
+tolColorMult = [
+	["m",	1.0,	'F'],
+	["r",	2.0,	'G'],
+	["v",	0.5,	'D'],
+	["a",	0.25,	'C'],
+	["vi",	0.10,	'B'],
+	["g",	0.05,	'-'],
+	["d",	5.0,	'J'],
+	["p",	10.0,	'K'],
+]
 
 
 def e12toColorCodes(e12str):
-	return [resistColorCodes[e12str[0]], resistColorCodes[e12str[1]]]
+	colorCodeLst = []
+	for c in e12str:
+		colorCodeLst.append(resistColorCodes[c])
+	return colorCodeLst
 
 def tolStrPretty(tolVal):
 	return "    "+str(round(tolVal,3)).rstrip('0').rstrip('.') + '%'
 
 def getRandomResistValue():
+	
+	pTol = [0.1, 0.1, 0.05, 0.02, 0.02, 0.01, 0.35, 0.35]	# probabilitades
 
-	# elegir valor de E12
-	e12val = secrets.choice(e12series)
+	# elegir tolerancia
+	tolID = np.random.choice(list(range(8)), p=pTol)
+	tol = tolColorMult[tolID]
+
+	eSeriesVal = ''
+	if tol[1] == 10.0:
+		eSeriesVal = secrets.choice(e12series)
+	elif tol[1] == 5.0:
+		eSeriesVal = secrets.choice(e24series)
+	elif tol[1] == 2.0:
+		eSeriesVal = secrets.choice(e48series)
+	else:
+		eSeriesVal = secrets.choice(e96series)
 
 	# elegir multiplicador (potencia de 10)
 	mult = list(secrets.choice(list(resistColorMult.items())))
 
-	# elegir tolerancia
-	tol = list(secrets.choice(list(tolColorMult.items())))
-
 	# Color pairs list
-	colorPairs = e12toColorCodes(e12val)
+	colorPairs = e12toColorCodes(eSeriesVal)
 	colorPairs.append(mult[0]) # agrego multiplicador
 	colorPairs.append(tol[0])
 
-	value = float(e12val) * (10 ** mult[1])
-	valueStrPretty = roundWithMultiplier(value)[0] + tolStrPretty(tol[1][0])
+	value = float(eSeriesVal) * (10 ** mult[1])
+	valueStrPretty = roundWithMultiplier(value)[0] + tolStrPretty(tol[1])
 
 	valueStrRAW = str(round(value,3)).rstrip('0').rstrip('.')
 
@@ -112,7 +122,7 @@ def getRandomResistValue():
 	# colorPairs = ["v", "vi", "d", "g", "p"]
 	# TODO: colocar la opcion de tolerancia
 	ans = valueStrPretty.split()
-	return colorPairs, [[ans[0]], [ans[1], tol[1][1]]]
+	return colorPairs, [[ans[0]], [ans[1], tol[2]]]
 
 
 def drawResist(screen, x, y, colorPairs=[[]]):
@@ -128,12 +138,20 @@ def drawResist(screen, x, y, colorPairs=[[]]):
 	pygame.draw.rect(screen, baseColor, rectL, border_radius=15)
 	pygame.draw.rect(screen, baseColor, rectR, border_radius=15)
 	pygame.draw.rect(screen, baseColor, rectCenter)
-	bandStepX = 20
+
+	bandPosX = 0
+	bandStepIncrement = 0
+	if len(colorPairs) == 4:
+		bandStepIncrement = 35
+		bandPosX = 25
+	else:
+		bandStepIncrement = 30
+		bandPosX = 17
 
 	for color in colorPairs:
-		rectColorBand = pygame.Rect(x+widthLR+bandStepX, y+centerOffset, 20, heightCenter)
+		rectColorBand = pygame.Rect(x+widthLR+bandPosX, y+centerOffset, 20, heightCenter)
 		pygame.draw.rect(screen, resistColorNames[color], rectColorBand)
-		bandStepX += 35
+		bandPosX += bandStepIncrement
 
 
 
@@ -247,13 +265,13 @@ class ToleranceColorElement(TestElement):
 
 	def _getRandomColorCode(self):
 		if len(self.toleranceCodesPool) == 0:
-			self.toleranceCodesPool = secretShuffle(list(tolColorMult.items()))
+			self.toleranceCodesPool = secretShuffle(tolColorMult[:])
 
 		tolPair = list( self.toleranceCodesPool.pop() )
 
-		tolCode = str(round(tolPair[1][0], 3)).rstrip('0').rstrip('.') + '%'
+		tolCode = str(round(tolPair[1], 3)).rstrip('0').rstrip('.') + '%'
 		# TODO: Colocar aca la otra opcion de tolerancia
-		return [[tolCode, tolPair[1][1]]], tolPair[0]
+		return [[tolCode, tolPair[2]]], tolPair[0]
 
 	# instance method
 	def draw(self):
